@@ -128,3 +128,26 @@ Common responsibilities includes:
 
 Popular MLOps Tools
 ![Tools](./assets/images/4-MlOps-Tools.png)
+
+## MlFlow
+
+### Pre-requisites
+- Python
+
+### Installing mlflow
+```bash
+pip install mlflow
+
+# OPTIONAL: If you are facing issue with pip install,
+# create virtual environemnt before pip command
+python -m venv .venv
+source .venv/bin/activate
+
+```
+
+### Starting MLFlow UI
+```bash
+mlflow ui
+
+# Access UI at http://127.0.0.1:5000
+```
