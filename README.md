@@ -60,4 +60,7 @@ docker build -t myapp-opt -f ../dockerfile-optimized .
 ### Running application from container
 ```bash
 docker run -it --rm -p 80:80 myapp
+
+# Run as a service (Optimized Image)
+docker run -d --restart=unless-stopped -p 80:80 --name myapp myapp-opt
 ```

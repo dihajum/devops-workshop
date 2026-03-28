@@ -1,0 +1,30 @@
+name: Deploy App
+run-name: ${{ github.event.head_commit.message }}
+
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - name: Clone Repository
+        uses: actions/checkout@v6
+        with:
+          submodules: true
+      - name: Build App Container
+        shell: bash
+        run: |
+          cd angular-landing-page
+          docker build -t myapp-opt -f ../dockerfile-optimized .
+
+  deploy:
+    runs-on: self-hosted
+    needs: [build]
+    steps:
+      - name: Deploy New Image
+        shell: bash
+        run: |
+          docker restart myapp
