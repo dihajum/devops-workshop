@@ -1,0 +1,17 @@
+FROM node:18-alpine AS builder
+
+WORKDIR /code
+
+COPY ./src /code/src
+COPY angular.json /code/
+COPY *.json /code/
+
+RUN npm install && \
+    npm run build
+
+FROM nginx:stable-alpine
+
+COPY --from=builder /code/dist /usr/share/nginx/html
+
+EXPOSE 80
+# ENTRYPOINT ["nginx", "-g", "daemon off;"]
