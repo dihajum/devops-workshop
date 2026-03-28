@@ -13,8 +13,6 @@ jobs:
     steps:
       - name: Clone Repository
         uses: actions/checkout@v6
-        with:
-          submodules: true
       - name: Build App Container
         shell: bash
         run: |
