@@ -21,11 +21,9 @@
 
 # Development
 
-## Setup sample project
-
 ### Clone Repository
 ```bash
-git clone https://github.com/AminduSasanka/angular-landing-page.git
+git clone --recurse-submodules https://github.com/dihajum/devops-workshop.git
 ```
 
 ### Install Dependencies
