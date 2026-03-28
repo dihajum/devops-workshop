@@ -18,7 +18,8 @@ jobs:
         shell: bash
         run: |
           cd angular-landing-page
-          docker build -t myapp-opt -f ../dockerfile-optimized .
+          echo "Building Container Image"
+          docker build --no-cache -t myapp-opt -f ../dockerfile-optimized .
 
   deploy:
     runs-on: self-hosted
@@ -27,4 +28,7 @@ jobs:
       - name: Deploy New Image
         shell: bash
         run: |
+          echo "Restarting Contaier"
           docker restart myapp
+          echo "Clearing stale images"
+          docker image prune -f
