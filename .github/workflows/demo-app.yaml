@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+    name: Build
     runs-on: self-hosted
     steps:
       - name: Clone Repository
@@ -22,6 +23,7 @@ jobs:
           docker build --no-cache -t myapp-opt -f ../dockerfile-optimized .
 
   deploy:
+    name: Deploy
     runs-on: self-hosted
     needs: [build]
     steps:
