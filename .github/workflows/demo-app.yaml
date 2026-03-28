@@ -29,6 +29,8 @@ jobs:
         shell: bash
         run: |
           echo "Restarting Contaier"
-          docker restart myapp
+          docker container stop myapp
+          docker container rm myapp
+          docker run -d --restart=unless-stopped -p 80:80 --name myapp myapp-opt
           echo "Clearing stale images"
           docker image prune -f
