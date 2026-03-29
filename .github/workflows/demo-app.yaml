@@ -7,9 +7,37 @@ on:
     - main
 
 jobs:
+
+  scan:
+    name: Code Scan
+    runs-on: self-hosted
+    steps:
+      - name: Message
+        shell: bash
+        run: echo "Scanning Code"
+
+  unit-test:
+    name: Unit Test
+    runs-on: self-hosted
+    needs: [scan]
+    steps:
+      - name: Message
+        shell: bash
+        run: echo "Running Unit Test"
+
+  e2e-test:
+    name: E2E Test
+    runs-on: self-hosted
+    needs: [unit-test]
+    steps:
+      - name: Message
+        shell: bash
+        run: echo "Running E2E Tests"
+
   build:
     name: Build
     runs-on: self-hosted
+    needs: [e2e-test]
     steps:
       - name: Clone Repository
         uses: actions/checkout@v6
@@ -20,10 +48,19 @@ jobs:
           echo "Building Container Image"
           docker build --no-cache -t myapp-opt -f ../dockerfile-optimized .
 
+  publish:
+    name: Publish Image
+    runs-on: self-hosted
+    needs: [build]
+    steps:
+      - name: Message
+        shell: bash
+        run: echo "Publishing Image"
+
   deploy:
     name: Deploy
     runs-on: self-hosted
-    needs: [build]
+    needs: [publish]
     steps:
       - name: Deploy New Image
         shell: bash
@@ -34,3 +71,12 @@ jobs:
           docker run -d --restart=unless-stopped -p 80:80 --name myapp myapp-opt
           echo "Clearing stale images"
           docker image prune -f
+
+  notify:
+    name: Notify User about release
+    runs-on: self-hosted
+    needs: [deploy]
+    steps:
+      - name: Message
+        shell: bash
+        run: echo "Notifying Users"
