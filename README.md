@@ -3,7 +3,7 @@
 Common Roles in SDLC
 - Developer
 - DevOps
-- MlOps
+- MLOps
 - SRE
 
 ---
@@ -12,13 +12,17 @@ Common Roles in SDLC
 
 ## Pre-requisites
 - Ubuntu
+- Install Git
+  ```bash
+  sudo apt update && sudo apt install git -y
+  ```
 - Install NodeJS and NPM
-    ```bash
-    sudo apt update && sudo apt install nodejs npm
-    ```
+  ```bash
+  sudo apt update && sudo apt install nodejs npm -y
+  ```
 - Install Python
   ```bash
-  sudo apt update && apt install python3
+  sudo apt update && apt install python3 -y
   ```
 - Install Docker
     - Follow instructions from here: https://docs.docker.com/engine/install/ubuntu/
@@ -51,6 +55,16 @@ npm run build
 ```bash
 python3 -m http.server -d dist
 ```
+
+## Docker
+
+Virtual Machine vs Containers
+![Virtual Machines vs Containers](./assets/images/0-VM-vs-Containers.png)
+
+- Container is the technology to build lightweight, standalone, executable package that includes everything needed to run an application
+- Docker is an open source tool for packaging, sharing and running container image
+- Container image are built from the specification defined in Dockerfile
+
 
 ### Build Container Imge
 ```bash
@@ -128,6 +142,8 @@ Common responsibilities includes:
 
 Popular MLOps Tools
 ![Tools](./assets/images/4-MlOps-Tools.png)
+ZenML, Mlflow, AWS Bedrock, Google Agentic Development Kit, Kubeflow, Weights & Biases Weave, Databricks, Azure Machine Learning, Metaflow, ClearML, DataRobot, Apache Airflow
+
 
 ## MlFlow
 
