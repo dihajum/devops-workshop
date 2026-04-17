@@ -5,6 +5,7 @@ on:
   push:
     branches:
     - main
+  workflow_dispatch:
 
 jobs:
 
@@ -41,33 +42,39 @@ jobs:
     steps:
       - name: Clone Repository
         uses: actions/checkout@v6
+      - name: Login to Github container registry
+        uses: docker/login-action@4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+      - name: Lowercase repo name and username
+        run: echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
+      - name: Build and push container image to registry
+        uses: docker/build-push-action@v7
+        with:
+          push: true
+          tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
+          context: angular-landing-page
+          file: ../dockerfile-optimized
       - name: Build App Container
         shell: bash
         run: |
           cd angular-landing-page
           echo "Building Container Image"
-          docker build --no-cache -t myapp-opt -f ../dockerfile-optimized .
-
-  publish:
-    name: Publish Image
-    runs-on: self-hosted
-    needs: [build]
-    steps:
-      - name: Message
-        shell: bash
-        run: echo "Publishing Image"
+          docker build --no-cache -t angular-landing-page -f ../dockerfile-optimized .
 
   deploy:
     name: Deploy
     runs-on: self-hosted
-    needs: [publish]
+    needs: [build]
     steps:
       - name: Deploy New Image
         shell: bash
         run: |
           echo "Restarting Contaier"
-          docker container stop myapp
-          docker container rm myapp
+          docker container stop myapp || true
+          docker container rm myapp || true
           docker run -d --restart=unless-stopped -p 80:80 --name myapp myapp-opt
           echo "Clearing stale images"
           docker image prune -f
