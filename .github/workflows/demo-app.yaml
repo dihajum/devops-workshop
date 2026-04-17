@@ -39,6 +39,11 @@ jobs:
     name: Build
     runs-on: self-hosted
     needs: [e2e-test]
+    permissions:
+      contents: read  
+      packages: write
+      attestations: write
+      id-token: write
     steps:
       - name: Clone Repository
         uses: actions/checkout@v6
