@@ -70,6 +70,8 @@ jobs:
     runs-on: self-hosted
     needs: [build]
     steps:
+      - name: Lowercase repo name and username
+        run: echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
       - name: Deploy New Image
         shell: bash
         run: |
