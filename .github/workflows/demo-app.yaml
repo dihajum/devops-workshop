@@ -55,8 +55,8 @@ jobs:
         with:
           push: true
           tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
-          context: angular-landing-page
-          file: ../dockerfile-optimized
+          context: ./angular-landing-page
+          file: ./dockerfile-optimized
       - name: Build App Container
         shell: bash
         run: |
