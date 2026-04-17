@@ -59,15 +59,11 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           push: true
-          tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
+          tags: |
+            ghcr.io/${{ env.REPO }}:${{ github.sha }}
+            ghcr.io/${{ env.REPO }}:latest
           context: ./angular-landing-page
           file: ./dockerfile-optimized
-      - name: Build App Container
-        shell: bash
-        run: |
-          cd angular-landing-page
-          echo "Building Container Image"
-          docker build --no-cache -t angular-landing-page -f ../dockerfile-optimized .
 
   deploy:
     name: Deploy
@@ -80,7 +76,7 @@ jobs:
           echo "Restarting Contaier"
           docker container stop myapp || true
           docker container rm myapp || true
-          docker run -d --restart=unless-stopped -p 80:80 --name myapp myapp-opt
+          docker run -d --restart=unless-stopped -p 80:80 --name myapp ghcr.io/${{ env.REPO }}:latest
           echo "Clearing stale images"
           docker image prune -f
 
