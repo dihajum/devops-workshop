@@ -133,10 +133,19 @@ jobs:
 
 # MLOps Role
 
+MLOps is a set of practices and tools that aims to streamline and
+automate end-to-end machine learning lifecycle.
+
 Common responsibilities includes:
 - Data preparation and featurization
 - Continuous Training
 - Model tracking and deployment
+
+### Traditional Application vs ML Application
+
+![Traditional App](./assets/images/5-AppvsMlApp.png)
+
+### ML Apps Life Cycle
 
 ![MLOps](./assets/images/3-MlOps.png)
 
@@ -149,6 +158,13 @@ ZenML, Mlflow, AWS Bedrock, Google Agentic Development Kit, Kubeflow, Weights & 
 
 ### Pre-requisites
 - Python
+
+### Features
+- Experiments tracking
+- Package and share machine learning models
+- Model versioning and management
+- Model deployment both locally and on cloud
+- LLM and Agent Management
 
 ### Installing mlflow
 ```bash
@@ -167,3 +183,6 @@ mlflow ui
 
 # Access UI at http://127.0.0.1:5000
 ```
+
+## [Hugging Face](https://huggingface.co)
+AI platform often called "Github of Machine Learning". Platform to store
